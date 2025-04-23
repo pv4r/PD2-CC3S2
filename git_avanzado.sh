@@ -99,7 +99,8 @@ function gestionar_ramas() {
         echo "c) Cambiar a una rama existente"
         echo "d) Borrar una rama"
 	echo "e) Renombrar una rama"
-        echo "f) Volver al menú principal"
+	echo "f) Merge automatizado de una rama"
+        echo "g) Volver al menú principal"
         echo -n "Seleccione una opción: "
         read opcion_rama
         case "$opcion_rama" in
@@ -133,7 +134,10 @@ function gestionar_ramas() {
 		git branch -m "$rama" "$nuevo_nombre"
 		echo "Rama '$rama' renombrada a '$nuevo_nombre'."
 		;;
-            f|F)
+	    f|F)
+		merge_automatizado
+		;;
+            g|G)
                 break
                 ;;
             *)
@@ -381,6 +385,47 @@ function gestionar_hooks() {
         esac
     done
 }
+
+# 12. Merge automatizado de una rama
+function merge_automatizado() {
+    echo -n "Ingrese el nombre de la rama que desea fusionar en la rama actual: "
+    read rama_a_fusionar
+
+    # Validar que la rama exista
+    if ! git show-ref --verify --quiet refs/heads/"$rama_a_fusionar"; then
+        echo "La rama '$rama_a_fusionar' no existe."
+        return
+    fi
+
+    echo -n "Seleccione estrategia de resolución automática de conflictos:"
+    echo ""
+    echo "1) Usar siempre los cambios de la rama actual (ours)"
+    echo "2) Usar siempre los cambios de la rama que se fusiona (theirs)"
+    echo -n "Ingresa (1/2): "
+    read estrategia
+
+    case "$estrategia" in
+        1)
+            strategy_option="ours"
+            ;;
+        2)
+            strategy_option="theirs"
+            ;;
+        *)
+            echo "Estrategia no válida. Cancelando operación."
+            return
+            ;;
+    esac
+
+    echo ""
+    echo "Merge completado automaticamente utilizando la estrategia '$strategy_option'..."
+    git merge -X "$strategy_option" "$rama_a_fusionar"
+
+    echo ""
+    echo "=== Estado tras el merge ==="
+    git status
+}
+
 
 # Bucle principal del menú
 while true; do
