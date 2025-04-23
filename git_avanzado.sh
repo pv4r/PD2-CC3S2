@@ -270,7 +270,8 @@ function gestionar_diff() {
         echo "a) Mostrar diferencias entre el working tree y el área de staging (git diff)"
         echo "b) Mostrar diferencias entre el área de staging y el último commit (git diff --cached)"
         echo "c) Comparar diferencias entre dos ramas o commits"
-        echo "d) Volver al menú principal"
+	echo "d) Comparar diferencias de un archivo específico"
+        echo "e) Volver al menú principal"
         echo -n "Seleccione una opción: "
         read opcion_diff
         case "$opcion_diff" in
@@ -289,7 +290,16 @@ function gestionar_diff() {
                 read id2
                 git diff "$id1" "$id2"
                 ;;
-            d|D)
+	    d|D)
+		echo -n "Ingrese el primer identificador (rama o commit): "
+		read id1
+		echo -n "Ingrese el segundo identificador (rama o commit): "
+		read id2
+		echo -n "Ingrese la ruta del archivo: "
+		read archivo
+		git diff "$id1" "$id2" -- "$archivo"
+		;;
+            e|E)
                 break
                 ;;
             *)
