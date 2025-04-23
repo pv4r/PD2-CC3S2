@@ -41,7 +41,8 @@ function mostrar_menu_principal() {
     echo "8) Gestión de git bisect"
     echo "9) Gestión de git diff"
     echo "10) Gestión de Hooks"
-    echo "11) Salir"
+    echo "11) Generar reporte de estado del repositorio"
+    echo "12) Salir"
     echo -n "Seleccione una opción: "
 }
 
@@ -426,6 +427,53 @@ function merge_automatizado() {
     git status
 }
 
+# 13. Generar reporte de estado del repositorio
+function generar_reporte() {
+    archivo_reporte="reporte_git.txt"
+    echo "Generando reporte en '$archivo_reporte'..."
+
+    # Se sobreescribe el reporte cada vez que se llama a la funcion
+    {
+        echo "==============================="
+        echo "  REPORTE DE ESTADO GIT"
+        echo "  Fecha: $(date)"
+        echo "==============================="
+        echo ""
+
+        echo "=== Estado del repositorio ==="
+        git status
+        echo ""
+
+        echo "=== Ramas existentes ==="
+        git branch
+        echo ""
+
+        echo "=== Ultimos 5 commits ==="
+        git log --graph --oneline -n 5
+        echo ""
+
+        echo "=== Lista de stashes ==="
+        git stash list
+        echo ""
+
+        echo "=== Lista de submodulos ==="
+        git submodule status
+        echo ""
+
+        echo "=== Configuracion remota ==="
+        git remote -v
+        echo ""
+    } > "$archivo_reporte"
+
+    if [[ -f "$archivo_reporte" ]]; then
+        echo "Reporte generado exitosamente en '$archivo_reporte'."
+    else
+        echo "Hubo un problema al generar el reporte."
+    fi
+}
+
+
+
 
 # Bucle principal del menú
 while true; do
@@ -462,7 +510,10 @@ while true; do
         10)
             gestionar_hooks
             ;;
-        11)
+	11) 
+	    generar_reporte
+	    ;;
+        12)
             echo "Saliendo del script."
             exit 0
             ;;
