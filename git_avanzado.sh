@@ -318,7 +318,8 @@ function gestionar_hooks() {
         echo "b) Crear/instalar un hook (ej. pre-commit)"
         echo "c) Editar un hook existente"
         echo "d) Borrar un hook"
-        echo "e) Volver al menú principal"
+	echo "e) Instalar un hook"
+        echo "f) Volver al menú principal"
         echo -n "Seleccione una opción: "
         read opcion_hooks
         case "$opcion_hooks" in
@@ -359,7 +360,19 @@ function gestionar_hooks() {
                     echo "El hook '$hook_name' no existe."
                 fi
                 ;;
-            e|E)
+	    e|E)
+		echo -n "Ingrese el nombre del hook a instalar (por ejemplo, pre-commit): "
+		read hook_name
+		hook_file=".git/hooks/$hook_name"
+
+		echo -n "Ingrese el contenido del hook (una línea, se agregará '#!/bin/bash' al inicio), usa CTRL-d para dejar de escribir: "
+		echo "#!/bin/bash" > "$hook_file"
+		cat >> "$hook_file"
+
+		chmod +x "$hook_file"
+		echo "Hook '$hook_name' instalado."
+		;;
+            f|F)
                 break
                 ;;
             *)
