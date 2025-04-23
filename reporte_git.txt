@@ -1,0 +1,40 @@
+===============================
+  REPORTE DE ESTADO GIT
+  Fecha: Wed Apr 23 03:33:35 AM -05 2025
+===============================
+
+=== Estado del repositorio ===
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   git_avanzado.sh
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	reporte_git.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+=== Ramas existentes ===
+  feature/authentication
+* main
+
+=== Ultimos 5 commits ===
+* b007e20 Se agrego la funcionalidad de merge automatico al script
+* 41e86f4 Se agrego la funcionalidad de instalar un hook en el script
+* 9aa16b4 Segundo cambio en nuevo_archivo.txt
+* 7c90c3b Primer cambio en archivo nuevo_archivo.txt
+* 164f65c Se agrego funcionalidad de diff para un archivo en especifico
+
+=== Lista de stashes ===
+
+=== Lista de submodulos ===
+ a124813fd3d5529bf7c9c365cc8d10aca6e459bb libs/submodulo (heads/main)
+
+=== Configuracion remota ===
+origin	git@github.com:pv4r/PD2-CC3S2.git (fetch)
+origin	git@github.com:pv4r/PD2-CC3S2.git (push)
+
